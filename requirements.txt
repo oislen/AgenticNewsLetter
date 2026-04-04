@@ -1,0 +1,6 @@
+langchain-aws
+langchain-tavily
+langgraph
+markdown
+pytest
+boto3
