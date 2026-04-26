@@ -1,6 +1,10 @@
-langchain-aws
-langchain-tavily
-langgraph
-markdown
-pytest
-boto3
+langchain-aws==1.4.3
+langchain-tavily==0.2.17
+langgraph==1.1.6
+markdown==3.10.2
+pytest==9.0.2
+boto3==1.42.83
+constructs
+aws-cdk-lib==2.202.0
+constructs==10.6.0
+cdk-nag==2.37.55
