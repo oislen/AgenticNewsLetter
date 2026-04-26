@@ -237,6 +237,7 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+.creds
 
 # --- IDE & Editors ---
 .vscode/
