@@ -20,12 +20,10 @@ from aws.cdk.stacks.constructs import (
     SecretsManager,
 )
 
-
 class NewsletterStack(Stack):
-
+    
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
-
         
         #ECR Repository for our Docker Image
         self.ecr_repository = EcrRepository(
@@ -34,7 +32,7 @@ class NewsletterStack(Stack):
             repo_name="ds-newsletter-agent",
             tags={},
         )
-
+        
         # CodeBuild project to build and push Docker image to ECR
         source = codebuild.Source.git_hub(
             owner="oislen",
@@ -42,10 +40,10 @@ class NewsletterStack(Stack):
             branch_or_ref="main",
             webhook=False,
         )
-
+        
         self.inbound_consumer_build = CodeBuildProject(
             self,
-            construct_id="CodeBuildProject", 
+            construct_id="CodeBuildProject",
             project_name="CodeBuildJob",
             source=source,
             ecr_repo=self.ecr_repository.repository,
@@ -57,12 +55,11 @@ class NewsletterStack(Stack):
             compute_type=codebuild.ComputeType.MEDIUM,
             notification_topic_arn=None,
         )
-
-
+        
         # SQS Queue (Processing Queue)
         self.queue = SqsQueueWithDlq(
             self,
-            construct_id="ProcessingQueue", 
+            construct_id="ProcessingQueue",
             queue_name="ProcessingQueue",
             dead_letter_queue_name="ProcessingQueueDlq",
             fifo=False,
@@ -72,7 +69,7 @@ class NewsletterStack(Stack):
             is_production=False,
             tags={},
         )
-
+        
         # SNS Topic (Dispatcher)
         self.sns_topic = SnsTopic(
             self,
@@ -81,12 +78,12 @@ class NewsletterStack(Stack):
             display_name="NewsletterTopic",
             tags={},
         )
-        self.sns_topic.add_sqs_subscription(self.queue.queue)
-
+        #self.sns_topic.add_sqs_subscription(self.queue.queue)
+        
         # Lambda Function (The Agent)
         self.agent_lambda = LambdaFunction(
             self,
-            construct_id=f"AgentLambda", 
+            construct_id=f"AgentLambda",
             function_name="AgentLambda",
             repository=self.ecr_repository.repository,
             image_tag="latest",  # same tag CodeBuild pushed
@@ -101,7 +98,7 @@ class NewsletterStack(Stack):
             memory_size_mb=1024,
             tags={},
         )
-
+        
         # create filter policy for SNS subscription based on queue configs
         filter_policy = {
             "subject": sns.SubscriptionFilter.string_filter(
@@ -118,21 +115,21 @@ class NewsletterStack(Stack):
                 filter_policy=filter_policy
             )
         )
-
-        # Secret Manager for API Keys
-        self.agent_secrets = SecretsManager(
-            self,
-            construct_id="AgentSecrets",
-            secret_name="ds_newsletter_credentials"
-        )
-
+        
+        ## Secret Manager for API Keys
+        #self.agent_secrets = SecretsManager(
+        #    self,
+        #    construct_id="AgentSecrets",
+        #    secret_name="ds_newsletter_credentials"
+        #)
+        
         # Permissions: Allow Lambda to read secrets and call Bedrock
-        self.agent_secrets.secrets.grant_read(self.agent_lambda.function)
+        #self.agent_secrets.secrets.grant_read(self.agent_lambda.function)
         self.agent_lambda.function.add_to_role_policy(iam.PolicyStatement(
             actions=["bedrock:InvokeModel", "bedrock:InvokeModelWithResponseStream"],
             resources=["*"] # Narrow this down to specific model ARNs in production
         ))
-
+        
         # EventBridge Cron Job (Every Monday 8 AM)
         self.weekly_rule = EventBridgeRule(
             self,
