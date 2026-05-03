@@ -20,19 +20,19 @@ phases:
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
 
-  cdk_build:
+  build:
     commands:
+      # installing uv environment
       - echo "Syncing dependencies with uv..."
       - export PATH="$HOME/.local/bin:$PATH"
       - uv sync --frozen
       - . .venv/bin/activate
+      # running cdk build
       - echo "Running CDK synth..."
       - cdk synth
       - echo "Deploying CDK stack..."
       - cdk deploy --require-approval never
-    
-  docker_build:
-    commands:
+      # running docker build
       - echo Build started on `date`
       - echo Building the Docker image...
       - docker build -t $REPOSITORY_URI:latest .
