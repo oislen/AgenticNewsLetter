@@ -31,7 +31,7 @@ phases:
       - echo "Running CDK synth..."
       - cdk synth
       - echo "Deploying CDK stack..."
-      - cdk deploy --require-approval never
+      - cdk deploy --all --require-approval never
       # running docker build
       - echo Build started on `date`
       - echo Building the Docker image...
