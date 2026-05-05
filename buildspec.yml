@@ -28,11 +28,13 @@ phases:
       - uv sync --frozen
       - . .venv/bin/activate
       # running cdk build
+      - cd aws/cdk
       - echo "Running CDK synth..."
       - cdk synth
       - echo "Deploying CDK stack..."
       - cdk deploy --all --require-approval never
       # running docker build
+      - cd ../..
       - echo Build started on `date`
       - echo Building the Docker image...
       - docker build -t $REPOSITORY_URI:latest .
