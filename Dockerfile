@@ -1,25 +1,30 @@
-FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim AS builder
+# get base image
+FROM python:3.14
 
-WORKDIR /app
+# set environment variables
+ENV user=ubuntu
+ENV DEBIAN_FRONTEND=noninteractive
+# set python version
+ARG PYTHON_VERSION="3.14"
+ENV PYTHON_VERSION=${PYTHON_VERSION}
 
-# Enable bytecode compilation
-ENV UV_COMPILE_BYTECODE=1
-# Copy only the files needed for installation to cache the layer
-COPY pyproject.toml uv.lock .python-version ./
+# install required software and programmes for development environment
+RUN apt-get update
+RUN apt-get install -y apt-utils vim curl wget unzip tree htop adduser
 
-# Install dependencies (this creates the .venv)
-RUN uv sync --frozen --no-install-project --no-dev
+# set up home environment
+RUN adduser ${user}
+RUN mkdir -p /home/${user} && chown -R ${user}: /home/${user}
 
-# Final Stage
-FROM python:3.12-slim-bookworm
-WORKDIR /app
+# clone git repo
+COPY . /home/${user}/AgenticNewsLetter
+# set working directory
+WORKDIR /home/${user}/AgenticNewsLetter
 
-# Copy the virtual environment from the builder
-COPY --from=builder /app/.venv /app/.venv
-COPY src/ ./src/
-COPY main.py .
+# install required python packages
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+RUN uv sync
 
 # Use the virtual environment's python
 ENV PATH="/app/.venv/bin:$PATH"
-
-CMD ["python", "main.py"]
+CMD ["python", "newsletter/main.py"]
