@@ -32,6 +32,7 @@ phases:
       - echo "Running CDK synth..."
       - cdk synth
       - echo "Deploying CDK stack..."
+      - cdk bootstrap aws://$AWS_ACCOUNT_ID/$AWS_DEFAULT_REGION
       - cdk deploy --all --require-approval never
       # running docker build
       - cd ../..
