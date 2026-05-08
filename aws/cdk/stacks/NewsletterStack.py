@@ -22,7 +22,7 @@ from aws.cdk.stacks.constructs import (
 
 class NewsletterStack(Stack):
     
-    def __init__(self, scope: Construct, construct_id: str, inital_run: bool = False, **kwargs) -> None:
+    def __init__(self, scope: Construct, construct_id: str, initial_run: bool = False, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
         
         #ECR Repository for our Docker Image
@@ -97,7 +97,7 @@ class NewsletterStack(Stack):
         )
         
         #self.sns_topic.add_sqs_subscription(self.queue.queue)
-        if not inital_run:
+        if not initial_run:
             # Lambda Function (The Agent)
             self.agent_lambda = LambdaFunction(
                 self,

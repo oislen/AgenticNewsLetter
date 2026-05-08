@@ -18,6 +18,11 @@ lgr.setLevel(logging.INFO)
 # Get AWS account and region from environment variables (set by CDK CLI)
 account = os.getenv("CDK_DEFAULT_ACCOUNT")
 region = os.getenv("CDK_DEFAULT_REGION")
+initial_run = os.getenv("CDK_INITIAL_RUN", False)
+
+logging.info(f"account: {account}")
+logging.info(f"region: {region}")
+logging.info(f"initial_run: {initial_run}")
 
 # Define deployment environment (account and region)
 deployment_env = cdk.Environment(
@@ -32,6 +37,7 @@ app = cdk.App()
 newsletter_stack = NewsletterStack(
     scope=app,
     construct_id="NewsletterFeatureStack",
+    initial_run=initial_run,
     env=deployment_env
 )
 
