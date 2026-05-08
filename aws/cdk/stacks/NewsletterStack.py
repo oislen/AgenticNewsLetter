@@ -78,7 +78,6 @@ class NewsletterStack(Stack):
             is_production=False,
             tags={},
         )
-        
         # create filter policy for SNS subscription based on queue configs
         filter_policy = {
             "subject": sns.SubscriptionFilter.string_filter(
@@ -116,13 +115,19 @@ class NewsletterStack(Stack):
                 memory_size_mb=1024,
                 tags={},
             )
-            
             # Permissions: Allow Lambda to read secrets and call Bedrock
-            #self.agent_secrets.secrets.grant_read(self.agent_lambda.function)
             self.agent_lambda.function.add_to_role_policy(iam.PolicyStatement(
                 actions=["bedrock:InvokeModel", "bedrock:InvokeModelWithResponseStream"],
                 resources=["*"] # Narrow this down to specific model ARNs in production
             ))
+            # add sqs trigger to lambda
+            self.agent_lambda.function.add_event_source(
+                lambda_events.SqsEventSource(
+                    self.queue.queue,
+                    batch_size=1,
+                    enabled=True,
+                )
+            )
         
         # EventBridge Cron Job (Every Monday 8 AM)
         self.weekly_rule = EventBridgeRule(
