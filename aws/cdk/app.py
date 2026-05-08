@@ -18,7 +18,7 @@ lgr.setLevel(logging.INFO)
 # Get AWS account and region from environment variables (set by CDK CLI)
 account = os.getenv("CDK_DEFAULT_ACCOUNT")
 region = os.getenv("CDK_DEFAULT_REGION")
-initial_run = os.getenv("CDK_INITIAL_RUN", False).strip().lower() == True
+initial_run = os.getenv("CDK_INITIAL_RUN", "False").strip().lower() == 'true'
 
 logging.info(f"account: {account}")
 logging.info(f"region: {region}")
