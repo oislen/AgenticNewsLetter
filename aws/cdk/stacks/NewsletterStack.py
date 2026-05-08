@@ -135,5 +135,6 @@ class NewsletterStack(Stack):
             construct_id="WeeklySchedule",
             rule_name="WeeklySchedule",
             schedule=events.Schedule.cron(minute="0", hour="8", month="*", year="*", week_day="MON"),
+            enabled=False,
         )
         self.weekly_rule.rule.add_target(targets.SnsTopic(self.sns_topic.topic))

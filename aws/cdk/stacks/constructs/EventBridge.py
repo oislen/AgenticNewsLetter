@@ -13,6 +13,7 @@ class EventBridgeRule(Construct):
         *,
         rule_name: str,
         schedule: events.Schedule,
+        enabled: bool = True,
     ) -> None:
         super().__init__(scope, construct_id)
 
@@ -20,6 +21,7 @@ class EventBridgeRule(Construct):
         self.rule = events.Rule(
             self, 
             id=construct_id,
+            enabled=enabled,
             rule_name=rule_name,
             schedule=schedule,
         )
