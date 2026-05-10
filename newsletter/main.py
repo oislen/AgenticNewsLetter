@@ -17,7 +17,6 @@ if __name__ == "__main__":
             secrets = {"TAVILY_API_KEY":file.readline()}
     else:
         secrets = get_secrets()
-    breakpoint()
     os.environ["TAVILY_API_KEY"] = secrets['TAVILY_API_KEY']
     
     # Change 'style' here to switch the newsletter's behavior
