@@ -17,16 +17,13 @@ def writer_node(state: NewsletterState):
             #"trace": "enabled" # Helpful for debugging why a response was blocked
         }
     )
-
     # determine selected style
     selected_style = style_guides.get(state.get("style", "ELI5"))  
-
     # The rest of your chain remains the same
     prompt = ChatPromptTemplate.from_messages([
             ("system", f"You are a specialized personal News Letter writer. Style Guide: {selected_style}"),
-            ("human", f"Transform this research into a newsletter about {state['topic']}:\n\n{state['research_data']}")
+            ("human", f"Transform this research into a newsletter about {state['topic']} - {state['subtopic']}:\n\n{state['research_data']}")
         ])
-    
     try:
         response = llm.invoke(prompt.format(data=state['research_data']))
         return {"newsletter_draft": response.content}
