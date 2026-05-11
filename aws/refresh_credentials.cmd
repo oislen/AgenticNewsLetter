@@ -1,5 +1,5 @@
 :: user settings
-set user_dir=C:\Users\OisinLeonard\Documents\DSProjects\AgenticNewsLetter\.creds
+set user_dir=E:\GitHub\AgenticNewsLetter\.creds
 set ubuntu_dir=/home/config
 set session_fname=sessionToken.json
 
