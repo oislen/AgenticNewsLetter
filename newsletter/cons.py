@@ -6,11 +6,17 @@ import sys
 base_dir = os.getcwd().split("AgenticNewsLetter")[0]
 root_dir = os.path.join(base_dir, "AgenticNewsLetter")
 newletter_dir = os.path.join(root_dir, "newletter")
+# creds
 creds_dir = os.path.join(root_dir, ".creds")
 tavily_api_fpath = os.path.join(creds_dir, "tavily")
+email_username_fpath = os.path.join(creds_dir, "email_username")
+email_password_fpath = os.path.join(creds_dir, "email_pass")
 # append file locations to path
 for path in [base_dir, root_dir, newletter_dir, creds_dir]:
     sys.path.append(path)
+
+# set test environment flag
+localTestEnv = True
 
 # set root file directories
 root_dir_re_match = re.findall(string=os.getcwd(), pattern="^.+AgenticNewsLetter")
