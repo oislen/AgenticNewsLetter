@@ -2,6 +2,7 @@ import os
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import markdown
+import smtplib
 
 from state import NewsletterState
 
@@ -9,10 +10,14 @@ def publisher_node(state: NewsletterState):
     # Fetching environment variables set in GitHub Secrets
     sender = os.getenv("SENDER_EMAIL")
     pw = os.getenv("SENDER_PASSWORD")
-    
     html = markdown.markdown(state['newsletter_draft'])
     msg = MIMEMultipart()
-    msg['Subject'] = f"📊 DS Pulse: {state['topic']}"
+    msg['Subject'] = f"📊 DS Pulse: {state['topic']} - {state['subtopic']}"
     msg['From'] = sender
     msg['To'] = sender # Sending to yourself
     msg.attach(MIMEText(f"<html><body>{html}</body></html>", 'html'))
+    with smtplib.SMTP("smtp.gmail.com", 587) as server:
+        server.starttls()
+        server.login(sender, pw)
+        server.send_message(msg)
+    return {"steps_taken": ["publisher_complete"]}
