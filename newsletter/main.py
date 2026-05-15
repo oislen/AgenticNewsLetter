@@ -19,7 +19,7 @@ if __name__ == "__main__":
     os.environ["TAVILY_API_KEY"] = secrets['TAVILY_API_KEY']
     os.environ["SENDER_EMAIL"] = secrets['SENDER_EMAIL']
     os.environ["SENDER_PASSWORD"] = secrets['SENDER_PASSWORD']
-    breakpoint()
+    os.environ["RECEIVER_EMAIL"] = secrets['RECEIVER_EMAIL']
 
     # Change 'style' here to switch the newsletter's behavior
     graph.invoke({
