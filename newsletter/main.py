@@ -1,26 +1,20 @@
 
 import os
 import sys
+from dotenv import load_dotenv
 
 import cons
 from graph import builder
-from utils import random_inputs, get_secrets, get_test_secrets
+from utils import random_inputs
 
 if __name__ == "__main__":
-    graph = builder.compile()
 
+    # load .env variables
+    load_dotenv()
+    # compile graph
+    graph = builder.compile()
     # generate random inputs
     inputs = random_inputs()
-    if cons.localTestEnv:
-        secrets = get_test_secrets(cons)
-    else:
-        secrets = get_secrets()
-    # assign secrets to runtime environment
-    os.environ["TAVILY_API_KEY"] = secrets['TAVILY_API_KEY']
-    os.environ["SENDER_EMAIL"] = secrets['SENDER_EMAIL']
-    os.environ["SENDER_PASSWORD"] = secrets['SENDER_PASSWORD']
-    os.environ["RECEIVER_EMAIL"] = secrets['RECEIVER_EMAIL']
-
     # Change 'style' here to switch the newsletter's behavior
     graph.invoke({
         "topic": inputs['topic'],
