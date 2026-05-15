@@ -1,3 +1,4 @@
 .creds
 .venv
 .env.example
+.env
