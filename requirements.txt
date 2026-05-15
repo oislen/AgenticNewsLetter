@@ -8,3 +8,4 @@ constructs
 aws-cdk-lib==2.202.0
 constructs==10.6.0
 cdk-nag==2.37.55
+dotenv==0.9.9

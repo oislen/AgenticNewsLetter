@@ -9,6 +9,7 @@ dependencies = [
     "boto3==1.42.83",
     "cdk-nag==2.37.55",
     "constructs==10.6.0",
+    "dotenv==0.9.9",
     "langchain-aws==1.4.3",
     "langchain-openai>=1.1.12",
     "langchain-tavily==0.2.17",
