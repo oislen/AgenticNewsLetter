@@ -52,18 +52,22 @@ def get_test_secrets(cons):
         return secret
     # set missing defaults
     tavily_secret = None
-    email_username = None
-    email_password = None
+    sender_email_username = None
+    sender_email_password = None
+    receiver_email_username = None
     # retrieve test secrets
     if os.path.exists(cons.tavily_api_fpath):
         tavily_secret = get_test_secret(cons.tavily_api_fpath)
-    if os.path.exists(cons.email_username_fpath):
-        email_username = get_test_secret(cons.email_username_fpath)
-    if os.path.exists(cons.email_password_fpath):
-        email_password = get_test_secret(cons.email_password_fpath)
+    if os.path.exists(cons.sender_email_username_fpath):
+        sender_email_username = get_test_secret(cons.sender_email_username_fpath)
+    if os.path.exists(cons.sender_email_password_fpath):
+        sender_email_password = get_test_secret(cons.sender_email_password_fpath)
+    if os.path.exists(cons.receiver_email_username_fpath):
+        receiver_email_username = get_test_secret(cons.receiver_email_username_fpath)
     secrets = {
         "TAVILY_API_KEY":tavily_secret,
-        "SENDER_EMAIL":email_username,
-        "SENDER_PASSWORD":email_password,
+        "SENDER_EMAIL":sender_email_username,
+        "SENDER_PASSWORD":sender_email_password,
+        "RECEIVER_EMAIL":receiver_email_username,
         }
     return secrets
