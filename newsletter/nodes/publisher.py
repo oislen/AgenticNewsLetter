@@ -8,10 +8,13 @@ from langchain_core.runnables import RunnableConfig
 from state import NewsletterState
 
 def publisher_node(state: NewsletterState, config: RunnableConfig):
+    """
+    """
     # Fetching environment variables set in GitHub Secrets
-    sender = config["SENDER_EMAIL"]
-    pw = config["SENDER_PASSWORD"]
-    receiver = config["RECEIVER_EMAIL"]
+    configurable = config.get("configurable", {})
+    sender = configurable.get("SENDER_EMAIL", None)
+    pw = configurable.get("SENDER_PASSWORD", None)
+    receiver = configurable.get("RECEIVER_EMAIL", None)
     html = markdown.markdown(state['newsletter_draft'])
     msg = MIMEMultipart()
     msg['Subject'] = f"📊 DS Pulse: {state['topic']} - {state['subtopic']}"
