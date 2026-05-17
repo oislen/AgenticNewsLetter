@@ -26,7 +26,8 @@ if __name__ == "__main__":
         "subtopic": inputs['subtopic'],
         "style": inputs['style'],
         "steps_taken": [],
-        "bedrock_client": bedrockClient
+        "bedrock_client": bedrockClient,
+        "bedrock_model_id": os.environ["BEDROCK_MODEL_ID"]
     }
     configurable = {
         "configurable":{
