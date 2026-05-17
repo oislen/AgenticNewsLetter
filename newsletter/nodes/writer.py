@@ -6,11 +6,12 @@ from state import NewsletterState
 from utils import style_guides
 
 def writer_node(state: NewsletterState, config: RunnableConfig):
+    """
+    """
     # Initialize the model with Guardrail integration
-    bedrock_client = config["bedrock_client"]
     llm = ChatBedrock(
-        client=bedrock_client,
-        model_id="eu.anthropic.claude-sonnet-4-5-20250929-v1:0",
+        client=state["bedrock_client"],
+        model_id=state["bedrock_model_id"],
         model_kwargs={
             "temperature": 0.7,
             #"guardrailIdentifier": "your-guardrail-id-here", # From AWS Console
