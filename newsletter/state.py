@@ -8,3 +8,4 @@ class NewsletterState(TypedDict):
     newsletter_draft: str
     steps_taken: List[str]
     bedrock_client: object
+    bedrock_model_id: str
