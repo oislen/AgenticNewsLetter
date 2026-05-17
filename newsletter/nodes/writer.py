@@ -1,14 +1,15 @@
 from langchain_aws import ChatBedrock
 from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.runnables import RunnableConfig
 
 from state import NewsletterState
-from utils import bedrock_client, style_guides
+from utils import style_guides
 
-def writer_node(state: NewsletterState):
+def writer_node(state: NewsletterState, config: RunnableConfig):
     # Initialize the model with Guardrail integration
-    bedrock_runtime = bedrock_client()
+    bedrock_client = config["bedrock_client"]
     llm = ChatBedrock(
-        client=bedrock_runtime,
+        client=bedrock_client,
         model_id="eu.anthropic.claude-sonnet-4-5-20250929-v1:0",
         model_kwargs={
             "temperature": 0.7,
@@ -18,7 +19,7 @@ def writer_node(state: NewsletterState):
         }
     )
     # determine selected style
-    selected_style = style_guides.get(state.get("style", "ELI5"))  
+    selected_style = style_guides.get(state.get("style", "ELI5"))
     # The rest of your chain remains the same
     prompt = ChatPromptTemplate.from_messages([
             ("system", f"You are a specialized personal News Letter writer. Style Guide: {selected_style}"),

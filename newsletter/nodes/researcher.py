@@ -1,8 +1,9 @@
 from langchain_tavily import TavilySearch
+from langchain_core.runnables import RunnableConfig
 
 from state import NewsletterState
 
-def researcher_node(state: NewsletterState):
+def researcher_node(state: NewsletterState, config: RunnableConfig):
     search = TavilySearch(max_results=5, search_depth="advanced", topic="news")
     query = f"latest breakthroughs and news in {state['topic']} for April 2026"
     search_results = search.invoke({"query": query})
