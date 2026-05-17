@@ -14,6 +14,7 @@ def writer_node(state: NewsletterState, config: RunnableConfig):
         model_id=state["bedrock_model_id"],
         model_kwargs={
             "temperature": 0.7,
+            "max_tokens": 2048,
             #"guardrailIdentifier": "your-guardrail-id-here", # From AWS Console
             #"guardrailVersion": "1", # Use a specific version or "DRAFT"
             #"trace": "enabled" # Helpful for debugging why a response was blocked
