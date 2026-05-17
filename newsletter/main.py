@@ -31,9 +31,9 @@ if __name__ == "__main__":
     }
     configurable = {
         "configurable":{
-            "TAVILY_API_KEY":get_secrets(secretsClient, os.environ["TAVILY_API_KEY"]),
+            "TAVILY_API_KEY":get_secrets(secretsClient, os.environ["TAVILY_API_KEY_ARN"]),
             "SENDER_EMAIL":os.environ["SENDER_EMAIL"],
-            "SENDER_PASSWORD":get_secrets(secretsClient,os.environ["SENDER_PASSWORD"]),
+            "SENDER_PASSWORD":get_secrets(secretsClient,os.environ["SENDER_PASSWORD_ARN"]),
             "RECEIVER_EMAIL":os.environ["RECEIVER_EMAIL"],
         }
     }
