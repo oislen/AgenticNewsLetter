@@ -3,13 +3,14 @@ import random
 
 from utils import topics, style_guides
 
-def random_inputs():
+def random_inputs(seed=None):
     """
     Generate random inputs for the newsletter graph. This function randomly selects a topic, subtopic, and style from the predefined lists in utils.
 
     Parameters:
     -----------
-    None
+    seed : int
+        A random seed to set for reproducibility, default is None
 
     Returns:
     --------
@@ -22,6 +23,8 @@ def random_inputs():
     inputs = random_inputs()
     ```
     """
+    if seed is not None:
+        random.seed(10)
     selected_topic = random.choice(list(topics.keys()))
     select_subtopic = random.choice(topics[selected_topic])
     select_style = random.choice(list(style_guides.keys()))
