@@ -1,0 +1,64 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36" version="29.5.2">
+  <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
+    <mxGraphModel dx="1426" dy="743" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
+        <mxCell id="RRsKTKEYAORHd_tpL29L-1" parent="WIyWlLk6GJQsqaUBKTNV-1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="Event Bridge Rule" vertex="1">
+          <mxGeometry height="80" width="80" x="80" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="RRsKTKEYAORHd_tpL29L-2" parent="WIyWlLk6GJQsqaUBKTNV-1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="Sns Topic" vertex="1">
+          <mxGeometry height="80" width="80" x="270" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="RRsKTKEYAORHd_tpL29L-3" parent="WIyWlLk6GJQsqaUBKTNV-1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="Sqs Queue" vertex="1">
+          <mxGeometry height="80" width="80" x="460" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="RRsKTKEYAORHd_tpL29L-4" parent="WIyWlLk6GJQsqaUBKTNV-1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="Lambda Function" vertex="1">
+          <mxGeometry height="80" width="80" x="650" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="RRsKTKEYAORHd_tpL29L-5" parent="WIyWlLk6GJQsqaUBKTNV-1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="Ecr Repository" vertex="1">
+          <mxGeometry height="80" width="80" x="827" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="RRsKTKEYAORHd_tpL29L-6" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="RRsKTKEYAORHd_tpL29L-1" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="RRsKTKEYAORHd_tpL29L-2" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="390" y="300" as="sourcePoint" />
+            <mxPoint x="440" y="250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RRsKTKEYAORHd_tpL29L-7" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="RRsKTKEYAORHd_tpL29L-2" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="RRsKTKEYAORHd_tpL29L-3" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="390" y="300" as="sourcePoint" />
+            <mxPoint x="440" y="250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RRsKTKEYAORHd_tpL29L-8" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="RRsKTKEYAORHd_tpL29L-3" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="RRsKTKEYAORHd_tpL29L-4" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="390" y="300" as="sourcePoint" />
+            <mxPoint x="440" y="250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RRsKTKEYAORHd_tpL29L-9" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="RRsKTKEYAORHd_tpL29L-5" style="endArrow=classic;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="RRsKTKEYAORHd_tpL29L-4" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="390" y="300" as="sourcePoint" />
+            <mxPoint x="440" y="250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="RRsKTKEYAORHd_tpL29L-15" parent="WIyWlLk6GJQsqaUBKTNV-1" style="swimlane;startSize=0;align=left;verticalAlign=top;fontStyle=0;whiteSpace=wrap;" value="&#xa;- Executes every Monday at 8am&#xa;- Sends message to execute agentic news letter" vertex="1">
+          <mxGeometry height="200" width="145" x="35" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="RRsKTKEYAORHd_tpL29L-16" parent="WIyWlLk6GJQsqaUBKTNV-1" style="swimlane;startSize=0;align=left;verticalAlign=top;fontStyle=0;whiteSpace=wrap;" value="&#xa;- Filters for messages of Subject and Status&#xa;- Distributes message to processing queue" vertex="1">
+          <mxGeometry height="200" width="145" x="237.5" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="RRsKTKEYAORHd_tpL29L-17" parent="WIyWlLk6GJQsqaUBKTNV-1" style="swimlane;startSize=0;align=left;verticalAlign=top;fontStyle=0;whiteSpace=wrap;" value="&#xa;- Retains messages for 1 day&#xa;- Max receive count is 3&#xa;- Visibility timeout is 1 minute&#xa;- Passes message to processing lambda&#xa;" vertex="1">
+          <mxGeometry height="200" width="145" x="427.5" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="RRsKTKEYAORHd_tpL29L-18" parent="WIyWlLk6GJQsqaUBKTNV-1" style="swimlane;startSize=0;align=left;verticalAlign=top;fontStyle=0;whiteSpace=wrap;" value="&#xa;- Runs lambda function logic&#xa;- Timeout is 1 minute&#xa;- 1 gb assigned memory&#xa;&#xa;" vertex="1">
+          <mxGeometry height="200" width="145" x="617.5" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="RRsKTKEYAORHd_tpL29L-19" parent="WIyWlLk6GJQsqaUBKTNV-1" style="swimlane;startSize=0;align=left;verticalAlign=top;fontStyle=0;whiteSpace=wrap;" value="&#xa;- Contains image with agentic news letter logic" vertex="1">
+          <mxGeometry height="200" width="145" x="794.5" y="260" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
