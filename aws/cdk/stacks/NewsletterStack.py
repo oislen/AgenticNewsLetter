@@ -137,4 +137,16 @@ class NewsletterStack(Stack):
             schedule=events.Schedule.cron(minute="0", hour="8", month="*", year="*", week_day="MON"),
             enabled=False,
         )
-        self.weekly_rule.rule.add_target(targets.SnsTopic(self.sns_topic.topic))
+        # define the message attributes to send to topic
+        message_attributes = {
+            "subject": targets.SnsTopicMessageAttribute(
+                value="AgenticNewsLetter",
+                data_type=targets.SnsTopicMessageAttributeDataType.STRING
+            ),
+            "status": targets.SnsTopicMessageAttribute(
+                value="Start",
+                data_type=targets.SnsTopicMessageAttributeDataType.STRING
+            )
+        }
+        # link sns topic to event bridge rule with message attributes
+        self.weekly_rule.rule.add_target(targets.SnsTopic(self.sns_topic.topic, message_attributes=message_attributes))
