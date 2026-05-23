@@ -1,3 +1,4 @@
+import logging
 from langchain_aws import ChatBedrock
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnableConfig
@@ -8,6 +9,8 @@ from utils import style_guides
 def writer_node(state: NewsletterState, config: RunnableConfig):
     """
     """
+    logging.info("Starting writer node ...")
+    logging.info("Initiating Bedrock Chat model ...")
     # Initialize the model with Guardrail integration
     llm = ChatBedrock(
         client=state["bedrock_client"],
@@ -24,12 +27,15 @@ def writer_node(state: NewsletterState, config: RunnableConfig):
     selected_style = style_guides.get(state.get("style", "ELI5"))
     # The rest of your chain remains the same
     prompt = ChatPromptTemplate.from_messages([
-            ("system", f"You are a specialized personal News Letter writer. Style Guide: {selected_style}"),
-            ("human", f"Transform this research into a newsletter about {state['topic']} - {state['subtopic']}:\n\n{state['research_data']}")
-        ])
+        ("system", f"You are a specialized personal News Letter writer. Style Guide: {selected_style}"),
+        ("human", f"Transform this research into a newsletter about {state['topic']} - {state['subtopic']}:\n\n{state['research_data']}")
+    ])
     try:
-        response = llm.invoke(prompt.format(data=state['research_data']))
-        return {"newsletter_draft": response.content}
+        logging.info("Invoking language model ...")
+        model_response = llm.invoke(prompt.format(data=state['research_data']))
+        response = {"newsletter_draft": model_response.content}
     except Exception as e:
+        logging.error(f"Error during model invocation: {e}")
         # If the guardrail triggers a block, handle it gracefully
-        return {"newsletter_draft": "Content blocked by safety guardrails.", "steps_taken": ["blocked"]}
+        response = {"newsletter_draft": "Content blocked by safety guardrails.", "steps_taken": ["blocked"]}
+    return response

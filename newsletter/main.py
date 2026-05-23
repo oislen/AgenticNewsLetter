@@ -1,6 +1,6 @@
 
 import os
-import sys
+import logging
 from dotenv import load_dotenv
 from datetime import datetime
 
@@ -9,6 +9,11 @@ from graph import builder
 from utils import random_inputs, get_secrets, boto3_session
 
 if __name__ == "__main__":
+    # set up logging
+    lgr = logging.getLogger()
+    lgr.setLevel(logging.INFO)
+
+    logging.info("Loading environment ...")
     # load .env variables
     load_dotenv()
     # create boto3 session
