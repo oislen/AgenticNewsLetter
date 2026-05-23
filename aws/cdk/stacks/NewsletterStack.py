@@ -1,3 +1,5 @@
+import os
+
 from aws_cdk import (
     Stack,
     aws_events as events,
@@ -90,7 +92,15 @@ class NewsletterStack(Stack):
                 entrypoint=["sh, /home/ubuntu/AgenticNewsLetter/entry.sh"],
                 cmd=["newsletter.LambdaHandler.lambda_handler"],
                 working_directory="/home/ubuntu/",
-                environment={},
+                environment={
+                    "AWS_REGION":os.environ["AWS_REGION"],
+                    "AWS_ACCOUNT_ID":os.environ["AWS_ACCOUNT_ID"],
+                    "TAVILY_API_KEY_ARN":os.environ["TAVILY_API_KEY_ARN"],
+                    "SENDER_EMAIL":os.environ["SENDER_EMAIL"],
+                    "SENDER_PASSWORD_ARN":os.environ["SENDER_PASSWORD_ARN"],
+                    "RECEIVER_EMAIL":os.environ["RECEIVER_EMAIL"],
+                    "BEDROCK_MODEL_ID":os.environ["BEDROCK_MODEL_ID"],
+                },
                 role=None,
                 vpc_id=None,
                 security_group_ids=None,
