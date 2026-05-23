@@ -10,3 +10,4 @@ constructs==10.6.0
 cdk-nag==2.37.55
 dotenv==0.9.9
 pydantic==2.13.0
+awslambdaric==4.0.0
