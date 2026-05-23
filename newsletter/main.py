@@ -14,8 +14,8 @@ if __name__ == "__main__":
     # create boto3 session
     session = boto3_session()
     # create service clients
-    secretsClient = session.client(service_name="secretsmanager")
-    bedrockClient = session.client(service_name="bedrock-runtime")
+    secretsClient = session.client(service_name="secretsmanager", region_name=os.environ["AWS_REGION"])
+    bedrockClient = session.client(service_name="bedrock-runtime", region_name=os.environ["AWS_REGION"])
     # compile graph
     graph = builder.compile()
     # generate random inputs
