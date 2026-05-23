@@ -24,7 +24,7 @@ WORKDIR /home/${user}/AgenticNewsLetter
 # install required python packages
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 RUN uv sync
-RUN uv clear cache
+RUN uv cache clear
 
 # set cmd
 ENV PATH="/app/.venv/bin:$PATH"
