@@ -93,7 +93,7 @@ class NewsletterStack(Stack):
                 cmd=["newsletter.LambdaHandler.lambda_handler"],
                 working_directory="/home/ubuntu/",
                 environment={
-                    "AWS_REGION":os.environ["AWS_REGION"],
+                    #"AWS_REGION":os.environ["AWS_REGION"],
                     "AWS_ACCOUNT_ID":os.environ["AWS_ACCOUNT_ID"],
                     "TAVILY_API_KEY_ARN":os.environ["TAVILY_API_KEY_ARN"],
                     "SENDER_EMAIL":os.environ["SENDER_EMAIL"],
