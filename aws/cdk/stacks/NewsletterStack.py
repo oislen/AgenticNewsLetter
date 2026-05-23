@@ -63,8 +63,12 @@ class NewsletterStack(Stack):
         )
         # create filter policy for SNS subscription based on queue configs
         filter_policy = {
-            "subject": sns.SubscriptionFilter.string_filter(allowlist=["AgenticNewsLetter"]),
-            "status": sns.SubscriptionFilter.string_filter(allowlist=["Start"])
+            "subject": sns.FilterOrPolicy.filter(
+                sns.SubscriptionFilter.string_filter(allowlist=["AgenticNewsLetter"])
+            ),
+            "status": sns.FilterOrPolicy.filter(
+                sns.SubscriptionFilter.string_filter(allowlist=["Start"])
+            )
         }
         # connect the SQS queue to the SNS topic for alerts related to this queue
         self.sns_topic.topic.add_subscription(
