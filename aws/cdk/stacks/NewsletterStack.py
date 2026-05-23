@@ -91,7 +91,7 @@ class NewsletterStack(Stack):
         self.sns_topic.topic.add_subscription(
             subs.SqsSubscription(
                 self.queue.queue,
-                filter_policy=filter_policy
+                filter_policy_with_message_body=filter_policy
             )
         )
         
@@ -138,15 +138,6 @@ class NewsletterStack(Stack):
             enabled=False,
         )
         # define the message attributes to send to topic
-        message_attributes = {
-            "subject": targets.SnsTopicMessageAttribute(
-                value="AgenticNewsLetter",
-                data_type=targets.SnsTopicMessageAttributeDataType.STRING
-            ),
-            "status": targets.SnsTopicMessageAttribute(
-                value="Start",
-                data_type=targets.SnsTopicMessageAttributeDataType.STRING
-            )
-        }
+        message = events.RuleTargetInput.from_object({"subject":"AgenticNewsLetter", "status": "Start"})
         # link sns topic to event bridge rule with message attributes
-        self.weekly_rule.rule.add_target(targets.SnsTopic(self.sns_topic.topic, message_attributes=message_attributes))
+        self.weekly_rule.rule.add_target(targets.SnsTopic(self.sns_topic.topic, message=message))
