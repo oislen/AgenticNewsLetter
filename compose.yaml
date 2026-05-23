@@ -3,3 +3,5 @@ services:
     agenticnewsletter:
         container_name: anl
         image: oislen/agenticnewsletter:latest
+        env_file:
+          - .env
