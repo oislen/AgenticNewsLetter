@@ -15,9 +15,7 @@ from aws.cdk.stacks.constructs import (
     EcrRepository,
     LambdaFunction,
     SnsTopic,
-    CodeBuildProject,
     EventBridgeRule,
-    SecretsManager,
 )
 
 class NewsletterStack(Stack):
@@ -39,21 +37,6 @@ class NewsletterStack(Stack):
             repo="AgenticNewsLetter",
             branch_or_ref="main",
             webhook=False,
-        )
-        
-        self.inbound_consumer_build = CodeBuildProject(
-            self,
-            construct_id="CodeBuildProject",
-            project_name="CodeBuildJob",
-            source=source,
-            ecr_repo=self.ecr_repository.repository,
-            image_tag="latest",
-            tags={},
-            vpc_id=None,
-            subnet_ids=None,
-            security_group_id=None,
-            compute_type=codebuild.ComputeType.MEDIUM,
-            notification_topic_arn=None,
         )
         
         # SNS Topic (Dispatcher)
