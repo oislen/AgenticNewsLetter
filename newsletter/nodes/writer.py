@@ -8,6 +8,19 @@ from utils import style_guides
 
 def writer_node(state: NewsletterState, config: RunnableConfig):
     """
+    This node takes the research data collated by the researcher node and generates a newsletter draft using the Bedrock Chat model. It constructs a prompt that includes the research data and a style guide, invokes the language model to generate the newsletter content, and handles any potential guardrail blocks gracefully.
+
+    Parameters
+    ----------
+    state : NewsletterState
+        The current state of the newsletter generation process, which includes the research data and other relevant information.
+    config : RunnableConfig
+        The configuration object that contains any necessary parameters for the writer node, such as API clients and model identifiers.
+
+    Returns
+    --------
+    dict
+        A dictionary containing the generated newsletter draft and the steps taken by the writer node.
     """
     logging.info("Starting writer node ...")
     logging.info("Initiating Bedrock Chat model ...")

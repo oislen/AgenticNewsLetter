@@ -7,6 +7,19 @@ from state import NewsletterState
 
 def researcher_node(state: NewsletterState, config: RunnableConfig):
     """
+    This node performs research on the specified topic and subtopic using the Tavily Search API. It constructs a search query based on the topic and subtopic, invokes the Tavily Search API to retrieve relevant information, and formats the results into a structured context that can be used by subsequent nodes in the newsletter generation process.
+
+    Parameters
+    ----------
+    state : NewsletterState
+        The current state of the newsletter generation process, which includes the topic and subtopic for research.
+    config : RunnableConfig
+        The configuration object that contains any necessary parameters for the researcher node, such as API keys for the Tavily Search API.
+
+    Returns
+    --------
+    dict
+        A dictionary containing the collated research data and the steps taken by the researcher node.
     """
     logging.info("Starting researcher node ...")
     # extract configurable parameters
