@@ -1,9 +1,9 @@
 version = 1
 revision = 3
-requires-python = ">=3.14"
+requires-python = "==3.14.*"
 
 [options]
-exclude-newer = "2026-05-16T13:59:42.4604886Z"
+exclude-newer = "2026-05-16T14:02:54.7633473Z"
 exclude-newer-span = "P7D"
 
 [[package]]
