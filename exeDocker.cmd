@@ -18,6 +18,7 @@ call docker build --no-cache -t %DOCKER_IMAGE% .
 :: call docker run -it --entrypoint bash --name %DOCKER_CONTAINER_NAME% --memory 7GB --volume E:\GitHub\RandomTelecomPayments\data:/home/ubuntu/RandomTelecomPayments/data --rm %DOCKER_IMAGE%
 :: call docker run --name %DOCKER_CONTAINER_NAME% --publish 8000:8000 --memory 7GB --entrypoint fastapi --rm %DOCKER_IMAGE% run generator/api.py
 :: call docker run --name anl --rm oislen/agenticnewsletter:latest
+:: call docker compose run --rm agenticnewsletter
 
 :: useful docker commands
 :: docker images
