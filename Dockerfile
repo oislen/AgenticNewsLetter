@@ -28,4 +28,7 @@ RUN uv cache clear
 
 # set cmd
 ENV PATH="/app/.venv/bin:$PATH"
-CMD ["uv", "run", "newsletter/main.py"]
+#CMD ["uv", "run", "newsletter/main.py"]
+RUN chmod 755 /home/ubuntu/AgenticNewsLetter/entry.sh
+ENTRYPOINT [ "sh","/home/ubuntu/AgenticNewsLetter/entry.sh" ]
+CMD [ "newsletter.LambdaHandler.lambda_handler" ]
