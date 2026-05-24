@@ -1,3 +1,3 @@
 #!/bin/sh
-# Execute the AWS Lambda Runtime Interface Client
-exec uv run python -m awslambdaric "$@"
+VENV_PYTHON="home/ubuntu/AgenticNewsLetter/.venv/bin/python3"
+exec $VENV_PYTHON -m awslambdaric "$1"
