@@ -136,7 +136,7 @@ class NewsletterStack(Stack):
             construct_id="WeeklySchedule",
             rule_name="WeeklySchedule",
             schedule=events.Schedule.cron(minute="0", hour="8", month="*", year="*", week_day="MON"),
-            enabled=False,
+            enabled=True,
         )
         # define the message attributes to send to topic
         message = events.RuleTargetInput.from_object({"subject":"AgenticNewsLetter", "status": "Start"})
