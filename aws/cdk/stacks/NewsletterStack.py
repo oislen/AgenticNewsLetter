@@ -104,7 +104,7 @@ class NewsletterStack(Stack):
                 role=None,
                 vpc_id=None,
                 security_group_ids=None,
-                timeout_seconds=60,
+                timeout_seconds=120,
                 memory_size_mb=1024,
                 tags={},
             )
