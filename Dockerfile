@@ -1,5 +1,5 @@
 # get base image
-FROM python:3.14
+FROM python:3.14-slim
 
 # set environment variables
 ENV user=ubuntu
