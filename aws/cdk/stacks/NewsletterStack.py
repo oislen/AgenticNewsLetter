@@ -108,10 +108,18 @@ class NewsletterStack(Stack):
                 memory_size_mb=1024,
                 tags={},
             )
-            # Permissions: Allow Lambda to read secrets and call Bedrock
+            # allow Lambda to read and call Bedrock
             self.agent_lambda.function.add_to_role_policy(iam.PolicyStatement(
                 actions=["bedrock:InvokeModel", "bedrock:InvokeModelWithResponseStream"],
                 resources=["*"] # Narrow this down to specific model ARNs in production
+            ))
+            # allow Lambda to read the necessary secrets from Secrets Manager
+            self.agent_lambda.function.add_to_role_policy(iam.PolicyStatement(
+                actions=["secretsmanager:GetSecretValue"],
+                resources=[
+                    os.environ["TAVILY_API_KEY_ARN"],
+                    os.environ["SENDER_PASSWORD_ARN"]
+                ]
             ))
             # add sqs trigger to lambda
             self.agent_lambda.function.add_event_source(
