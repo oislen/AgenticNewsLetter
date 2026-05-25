@@ -10,7 +10,7 @@ ENV PYTHON_VERSION=${PYTHON_VERSION}
 
 # install required software and programmes for development environment
 RUN apt-get update
-RUN apt-get install -y apt-utils vim curl wget unzip tree htop adduser
+RUN apt-get install -y apt-utils vim curl wget unzip gcc g++ make tree htop adduser
 
 # set up home environment
 RUN adduser ${user}
@@ -27,8 +27,8 @@ RUN uv sync
 RUN uv cache clear
 
 # set cmd
-ENV PATH="/app/.venv/bin:$PATH"
+ENV PATH="/home/${user}/AgenticNewsLetter/.venv/bin:${PATH}"
 #CMD ["uv", "run", "newsletter/main.py"]
-RUN chmod 755 /home/ubuntu/AgenticNewsLetter/entry.sh
+RUN chmod -R 755 /home/${user}/AgenticNewsLetter
 ENTRYPOINT [ "sh","/home/ubuntu/AgenticNewsLetter/entry.sh" ]
 CMD [ "newsletter.LambdaHandler.lambda_handler" ]
