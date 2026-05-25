@@ -89,7 +89,7 @@ class NewsletterStack(Stack):
                 function_name="AgentLambda",
                 repository=self.ecr_repository.repository,
                 image_tag="latest",
-                entrypoint=["sh,", "/home/ubuntu/AgenticNewsLetter/entry.sh"],
+                entrypoint=["sh", "/home/ubuntu/AgenticNewsLetter/entry.sh"],
                 cmd=["newsletter.LambdaHandler.lambda_handler"],
                 working_directory="/home/ubuntu/",
                 environment={
