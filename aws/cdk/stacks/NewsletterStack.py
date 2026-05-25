@@ -91,7 +91,7 @@ class NewsletterStack(Stack):
                 image_tag="latest",
                 entrypoint=["sh", "/home/ubuntu/AgenticNewsLetter/entry.sh"],
                 cmd=["newsletter.LambdaHandler.lambda_handler"],
-                working_directory="/home/ubuntu/",
+                working_directory="/home/ubuntu/AgenticNewsLetter",
                 environment={
                     #"AWS_REGION":os.environ["AWS_REGION"],
                     "AWS_ACCOUNT_ID":os.environ["AWS_ACCOUNT_ID"],
