@@ -26,9 +26,12 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 RUN uv sync
 RUN uv cache clear
 
+# ensure system binaries are globally executable
+RUN chmod +x /bin/sh /usr/bin/sh
+# ensure your workspace and the virtual environment can be read/executed by any user
+RUN chmod -R 755 /home/${user}
+
 # set cmd
 ENV PATH="/home/${user}/AgenticNewsLetter/.venv/bin:${PATH}"
-#CMD ["uv", "run", "newsletter/main.py"]
-RUN chmod -R 755 /home/${user}/AgenticNewsLetter
-ENTRYPOINT [ "sh","/home/ubuntu/AgenticNewsLetter/entry.sh" ]
+ENTRYPOINT [ "/bin/sh", "/home/ubuntu/AgenticNewsLetter/entry.sh" ]
 CMD [ "newsletter.LambdaHandler.lambda_handler" ]
