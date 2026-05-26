@@ -2,6 +2,8 @@ import os
 import sys
 import unittest
 
+sys.path.append(os.path.join(os.getcwd(), "newsletter"))
+
 NEWSLETTER_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 if NEWSLETTER_DIR not in sys.path:
     sys.path.insert(0, NEWSLETTER_DIR)
