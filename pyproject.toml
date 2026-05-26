@@ -3,19 +3,25 @@ name = "agenticnewsletter"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.14"
+requires-python = "==3.14.*"
 dependencies = [
     "aws-cdk-lib==2.202.0",
+    "awslambdaric==4.0.0",
     "boto3==1.42.83",
     "cdk-nag==2.37.55",
     "constructs==10.6.0",
     "dotenv==0.9.9",
+    "idna==3.15",
     "langchain-aws==1.4.3",
-    "langchain-openai>=1.1.12",
+    "langchain-core==1.3.3",
+    "langchain-openai==1.1.14",
     "langchain-tavily==0.2.17",
     "langgraph==1.1.6",
+    "langsmith==0.8.0",
     "markdown==3.10.2",
-    "pytest==9.0.2",
+    "pydantic==2.13.0",
+    "pytest==9.0.3",
+    "urllib3==2.7.0",
 ]
 
 [tool.uv]

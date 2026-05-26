@@ -1,3 +1,5 @@
+import os
+
 from aws_cdk import (
     Stack,
     aws_events as events,
@@ -15,9 +17,7 @@ from aws.cdk.stacks.constructs import (
     EcrRepository,
     LambdaFunction,
     SnsTopic,
-    CodeBuildProject,
     EventBridgeRule,
-    SecretsManager,
 )
 
 class NewsletterStack(Stack):
@@ -39,21 +39,6 @@ class NewsletterStack(Stack):
             repo="AgenticNewsLetter",
             branch_or_ref="main",
             webhook=False,
-        )
-        
-        self.inbound_consumer_build = CodeBuildProject(
-            self,
-            construct_id="CodeBuildProject",
-            project_name="CodeBuildJob",
-            source=source,
-            ecr_repo=self.ecr_repository.repository,
-            image_tag="latest",
-            tags={},
-            vpc_id=None,
-            subnet_ids=None,
-            security_group_id=None,
-            compute_type=codebuild.ComputeType.MEDIUM,
-            notification_topic_arn=None,
         )
         
         # SNS Topic (Dispatcher)
@@ -80,18 +65,18 @@ class NewsletterStack(Stack):
         )
         # create filter policy for SNS subscription based on queue configs
         filter_policy = {
-            "subject": sns.SubscriptionFilter.string_filter(
-                allowlist=["AgenticNewsLetter"]
+            "subject": sns.FilterOrPolicy.filter(
+                sns.SubscriptionFilter.string_filter(allowlist=["AgenticNewsLetter"])
             ),
-            "status": sns.SubscriptionFilter.string_filter(
-                allowlist=["Start"]
+            "status": sns.FilterOrPolicy.filter(
+                sns.SubscriptionFilter.string_filter(allowlist=["Start"])
             )
         }
         # connect the SQS queue to the SNS topic for alerts related to this queue
         self.sns_topic.topic.add_subscription(
             subs.SqsSubscription(
                 self.queue.queue,
-                filter_policy=filter_policy
+                filter_policy_with_message_body=filter_policy
             )
         )
         
@@ -103,22 +88,38 @@ class NewsletterStack(Stack):
                 construct_id=f"AgentLambda",
                 function_name="AgentLambda",
                 repository=self.ecr_repository.repository,
-                image_tag="latest",  # same tag CodeBuild pushed
-                entrypoint=["sh, /home/ubuntu/entry.sh"],
-                cmd=["AgenticNewsLetter.LambdaHandlers.AgenticNewsLetter.lambda_handler"],
-                working_directory="/home/ubuntu/",
-                environment={},
+                image_tag="latest",
+                entrypoint=["/bin/sh", "/home/ubuntu/AgenticNewsLetter/newsletter/entry.sh"],
+                cmd=["LambdaHandler.lambda_handler"],
+                working_directory="/home/ubuntu/AgenticNewsLetter/newsletter",
+                environment={
+                    #"AWS_REGION":os.environ["AWS_REGION"],
+                    "AWS_ACCOUNT_ID":os.environ["AWS_ACCOUNT_ID"],
+                    "TAVILY_API_KEY_ARN":os.environ["TAVILY_API_KEY_ARN"],
+                    "SENDER_EMAIL":os.environ["SENDER_EMAIL"],
+                    "SENDER_PASSWORD_ARN":os.environ["SENDER_PASSWORD_ARN"],
+                    "RECEIVER_EMAIL":os.environ["RECEIVER_EMAIL"],
+                    "BEDROCK_MODEL_ID":os.environ["BEDROCK_MODEL_ID"],
+                },
                 role=None,
                 vpc_id=None,
                 security_group_ids=None,
-                timeout_seconds=60,
+                timeout_seconds=120,
                 memory_size_mb=1024,
                 tags={},
             )
-            # Permissions: Allow Lambda to read secrets and call Bedrock
+            # allow Lambda to read and call Bedrock
             self.agent_lambda.function.add_to_role_policy(iam.PolicyStatement(
                 actions=["bedrock:InvokeModel", "bedrock:InvokeModelWithResponseStream"],
                 resources=["*"] # Narrow this down to specific model ARNs in production
+            ))
+            # allow Lambda to read the necessary secrets from Secrets Manager
+            self.agent_lambda.function.add_to_role_policy(iam.PolicyStatement(
+                actions=["secretsmanager:GetSecretValue"],
+                resources=[
+                    os.environ["TAVILY_API_KEY_ARN"],
+                    os.environ["SENDER_PASSWORD_ARN"]
+                ]
             ))
             # add sqs trigger to lambda
             self.agent_lambda.function.add_event_source(
@@ -135,6 +136,9 @@ class NewsletterStack(Stack):
             construct_id="WeeklySchedule",
             rule_name="WeeklySchedule",
             schedule=events.Schedule.cron(minute="0", hour="8", month="*", year="*", week_day="MON"),
-            enabled=False,
+            enabled=True,
         )
-        self.weekly_rule.rule.add_target(targets.SnsTopic(self.sns_topic.topic))
+        # define the message attributes to send to topic
+        message = events.RuleTargetInput.from_object({"subject":"AgenticNewsLetter", "status": "Start"})
+        # link sns topic to event bridge rule with message attributes
+        self.weekly_rule.rule.add_target(targets.SnsTopic(self.sns_topic.topic, message=message))

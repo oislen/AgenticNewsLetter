@@ -2,13 +2,14 @@ import boto3
 import json
 import os
 
-def get_secrets():
+def get_secrets(secretsClient, secret_arn):
     """
-    Retrieves secrets from AWS Secrets Manager using the ARN provided in the environment variable.
+    Retrieves secrets from AWS Secrets Manager using the ARN provided.
 
     Parameters:
     -----------
-    None
+    secret_arn : str
+        The Amazon Resource Name (ARN) of the secret to retrieve from AWS Secrets Manager.
 
     Returns:
     --------
@@ -18,13 +19,13 @@ def get_secrets():
     Example:
     --------
     ```
-    secrets = get_secrets()
-    ``` 
+    secrets = get_secrets(secret_arn)
+    ```
     """
-    secret_arn = os.getenv("SECRET_ARN")
-    client = boto3.client("secretsmanager")
-    response = client.get_secret_value(SecretId=secret_arn)
-    return json.loads(response['SecretString'])
+    response = secretsClient.get_secret_value(SecretId=secret_arn)
+    secretDict = json.loads(response['SecretString'])
+    secretValue = list(secretDict.values())[0]
+    return secretValue
 
 def get_test_secrets(cons):
     """

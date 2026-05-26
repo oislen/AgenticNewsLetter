@@ -1,1 +1,1 @@
-uv run main.py
+call uv run main.py

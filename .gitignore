@@ -253,3 +253,4 @@ desktop.ini
 # --- Project Specific ---
 newsletter_archive/    # If you save local copies of sent emails
 *.log                  # If you implement logging for your agents
+job_search_config.json
