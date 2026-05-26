@@ -1,63 +1,102 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36" version="29.5.2">
-  <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="1426" dy="743" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+<mxfile host="app.diagrams.net" version="29.5.2">
+  <diagram id="aws-cdk-stack-v2" name="AWS Infrastructure">
+    <mxGraphModel dx="1426" dy="743" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1000" math="0" shadow="0">
       <root>
-        <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
-        <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
-        <mxCell id="RRsKTKEYAORHd_tpL29L-1" parent="WIyWlLk6GJQsqaUBKTNV-1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="Event Bridge Rule" vertex="1">
-          <mxGeometry height="80" width="80" x="80" y="160" as="geometry" />
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="AgenticNewsLetter — AWS CDK Stack (NewsletterFeatureStack)" style="text;html=1;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="20" width="800" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="RRsKTKEYAORHd_tpL29L-2" parent="WIyWlLk6GJQsqaUBKTNV-1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="Sns Topic" vertex="1">
-          <mxGeometry height="80" width="80" x="270" y="160" as="geometry" />
+
+        <mxCell id="rule" value="EventBridge Rule&#xa;WeeklySchedule&#xa;cron(0 8 ? * MON *)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="60" y="190" width="160" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="RRsKTKEYAORHd_tpL29L-3" parent="WIyWlLk6GJQsqaUBKTNV-1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="Sqs Queue" vertex="1">
-          <mxGeometry height="80" width="80" x="460" y="160" as="geometry" />
+
+        <mxCell id="sns" value="SNS Topic&#xa;NewsletterTopic" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="280" y="190" width="160" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="RRsKTKEYAORHd_tpL29L-4" parent="WIyWlLk6GJQsqaUBKTNV-1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="Lambda Function" vertex="1">
-          <mxGeometry height="80" width="80" x="650" y="160" as="geometry" />
+
+        <mxCell id="sqs" value="SQS Queue&#xa;ProcessingQueue" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="500" y="190" width="160" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="RRsKTKEYAORHd_tpL29L-5" parent="WIyWlLk6GJQsqaUBKTNV-1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="Ecr Repository" vertex="1">
-          <mxGeometry height="80" width="80" x="827" y="160" as="geometry" />
+
+        <mxCell id="dlq" value="SQS DLQ&#xa;ProcessingQueueDlq" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="500" y="370" width="160" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="RRsKTKEYAORHd_tpL29L-6" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="RRsKTKEYAORHd_tpL29L-1" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="RRsKTKEYAORHd_tpL29L-2" value="">
-          <mxGeometry height="50" relative="1" width="50" as="geometry">
-            <mxPoint x="390" y="300" as="sourcePoint" />
-            <mxPoint x="440" y="250" as="targetPoint" />
-          </mxGeometry>
+
+        <mxCell id="lambda" value="Lambda Function&#xa;AgentLambda&#xa;DockerImageFunction" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="720" y="190" width="180" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="RRsKTKEYAORHd_tpL29L-7" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="RRsKTKEYAORHd_tpL29L-2" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="RRsKTKEYAORHd_tpL29L-3" value="">
-          <mxGeometry height="50" relative="1" width="50" as="geometry">
-            <mxPoint x="390" y="300" as="sourcePoint" />
-            <mxPoint x="440" y="250" as="targetPoint" />
-          </mxGeometry>
+
+        <mxCell id="ecr" value="ECR Repository&#xa;ds-newsletter-agent&#xa;tag: latest" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;fontStyle=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="940" y="60" width="180" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="RRsKTKEYAORHd_tpL29L-8" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="RRsKTKEYAORHd_tpL29L-3" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="RRsKTKEYAORHd_tpL29L-4" value="">
-          <mxGeometry height="50" relative="1" width="50" as="geometry">
-            <mxPoint x="390" y="300" as="sourcePoint" />
-            <mxPoint x="440" y="250" as="targetPoint" />
-          </mxGeometry>
+
+        <mxCell id="bedrock" value="AWS Bedrock&#xa;InvokeModel" style="rounded=0;whiteSpace=wrap;html=1;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="960" y="190" width="160" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="RRsKTKEYAORHd_tpL29L-9" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="RRsKTKEYAORHd_tpL29L-5" style="endArrow=classic;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="RRsKTKEYAORHd_tpL29L-4" value="">
-          <mxGeometry height="50" relative="1" width="50" as="geometry">
-            <mxPoint x="390" y="300" as="sourcePoint" />
-            <mxPoint x="440" y="250" as="targetPoint" />
-          </mxGeometry>
+
+        <mxCell id="secrets" value="Secrets Manager&#xa;TAVILY_API_KEY · SENDER_PASSWORD" style="rounded=0;whiteSpace=wrap;html=1;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="960" y="280" width="160" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="RRsKTKEYAORHd_tpL29L-15" parent="WIyWlLk6GJQsqaUBKTNV-1" style="swimlane;startSize=0;align=left;verticalAlign=top;fontStyle=0;whiteSpace=wrap;" value="&#xa;- Executes every Monday at 8am&#xa;- Sends message to execute agentic news letter" vertex="1">
-          <mxGeometry height="200" width="145" x="35" y="260" as="geometry" />
+
+        <mxCell id="tavily" value="Tavily Search API" style="rounded=0;whiteSpace=wrap;html=1;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="190" width="160" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="RRsKTKEYAORHd_tpL29L-16" parent="WIyWlLk6GJQsqaUBKTNV-1" style="swimlane;startSize=0;align=left;verticalAlign=top;fontStyle=0;whiteSpace=wrap;" value="&#xa;- Filters for messages of Subject and Status&#xa;- Distributes message to processing queue" vertex="1">
-          <mxGeometry height="200" width="145" x="237.5" y="260" as="geometry" />
+
+        <mxCell id="smtp" value="SMTP (Gmail)&#xa;smtp.gmail.com:587" style="rounded=0;whiteSpace=wrap;html=1;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="280" width="160" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="RRsKTKEYAORHd_tpL29L-17" parent="WIyWlLk6GJQsqaUBKTNV-1" style="swimlane;startSize=0;align=left;verticalAlign=top;fontStyle=0;whiteSpace=wrap;" value="&#xa;- Retains messages for 1 day&#xa;- Max receive count is 3&#xa;- Visibility timeout is 1 minute&#xa;- Passes message to processing lambda&#xa;" vertex="1">
-          <mxGeometry height="200" width="145" x="427.5" y="260" as="geometry" />
+
+        <mxCell id="e-rule-sns" value="targets.SnsTopic&#xa;message: { subject, status }" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;fontSize=10;" edge="1" parent="1" source="rule" target="sns">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="RRsKTKEYAORHd_tpL29L-18" parent="WIyWlLk6GJQsqaUBKTNV-1" style="swimlane;startSize=0;align=left;verticalAlign=top;fontStyle=0;whiteSpace=wrap;" value="&#xa;- Runs lambda function logic&#xa;- Timeout is 1 minute&#xa;- 1 gb assigned memory&#xa;&#xa;" vertex="1">
-          <mxGeometry height="200" width="145" x="617.5" y="260" as="geometry" />
+        <mxCell id="e-sns-sqs" value="SqsSubscription&#xa;filter: subject=AgenticNewsLetter, status=Start" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;fontSize=10;" edge="1" parent="1" source="sns" target="sqs">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="RRsKTKEYAORHd_tpL29L-19" parent="WIyWlLk6GJQsqaUBKTNV-1" style="swimlane;startSize=0;align=left;verticalAlign=top;fontStyle=0;whiteSpace=wrap;" value="&#xa;- Contains image with agentic news letter logic" vertex="1">
-          <mxGeometry height="200" width="145" x="794.5" y="260" as="geometry" />
+        <mxCell id="e-sqs-lambda" value="SqsEventSource&#xa;batch_size=1" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;fontSize=10;" edge="1" parent="1" source="sqs" target="lambda">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
+        <mxCell id="e-sqs-dlq" value="max_receive_count=3" style="endArrow=classic;html=1;rounded=0;dashed=1;fontSize=10;" edge="1" parent="1" source="sqs" target="dlq">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-ecr-lambda" value="DockerImageCode.from_ecr" style="endArrow=classic;html=1;rounded=0;fontSize=10;" edge="1" parent="1" source="ecr" target="lambda">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-lambda-bedrock" value="bedrock:InvokeModel" style="endArrow=classic;html=1;rounded=0;dashed=1;fontSize=10;" edge="1" parent="1" source="lambda" target="bedrock">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-lambda-secrets" value="secretsmanager:GetSecretValue" style="endArrow=classic;html=1;rounded=0;dashed=1;fontSize=10;" edge="1" parent="1" source="lambda" target="secrets">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-lambda-tavily" value="HTTPS" style="endArrow=classic;html=1;rounded=0;dashed=1;fontSize=10;" edge="1" parent="1" source="lambda" target="tavily">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-lambda-smtp" value="STARTTLS" style="endArrow=classic;html=1;rounded=0;dashed=1;fontSize=10;" edge="1" parent="1" source="lambda" target="smtp">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ann-rule" value="EventBridge Rule&#xa;&#xa;- cron: Mon 08:00 UTC&#xa;- target: SNS topic with message&#xa;  { subject: 'AgenticNewsLetter',&#xa;    status: 'Start' }&#xa;- enabled=true" style="swimlane;startSize=0;align=left;verticalAlign=top;fontStyle=0;whiteSpace=wrap;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="560" width="200" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="ann-sns" value="SNS Topic&#xa;&#xa;- Topic: NewsletterTopic&#xa;- Subscription filter policy on:&#xa;  • subject ∈ {AgenticNewsLetter}&#xa;  • status  ∈ {Start}&#xa;- Filtering uses message body" style="swimlane;startSize=0;align=left;verticalAlign=top;fontStyle=0;whiteSpace=wrap;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="260" y="560" width="200" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="ann-sqs" value="SQS Queue (+ DLQ)&#xa;&#xa;- retention: 1 day&#xa;- visibility timeout: 60s&#xa;- max receive count: 3 → DLQ&#xa;- SQS-managed encryption&#xa;- enforce SSL&#xa;- non-FIFO" style="swimlane;startSize=0;align=left;verticalAlign=top;fontStyle=0;whiteSpace=wrap;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="480" y="560" width="200" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="ann-lambda" value="Lambda Function&#xa;&#xa;- DockerImageFunction from ECR&#xa;- entrypoint: entry.sh&#xa;- cmd: LambdaHandler.lambda_handler&#xa;- timeout: 120s · memory: 1024 MB&#xa;- SqsEventSource batch_size=1&#xa;- env: TAVILY_API_KEY_ARN, SENDER_EMAIL,&#xa;  SENDER_PASSWORD_ARN, RECEIVER_EMAIL,&#xa;  BEDROCK_MODEL_ID, AWS_ACCOUNT_ID&#xa;- IAM: bedrock:InvokeModel,&#xa;  secretsmanager:GetSecretValue" style="swimlane;startSize=0;align=left;verticalAlign=top;fontStyle=0;whiteSpace=wrap;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="700" y="560" width="240" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="ann-ecr" value="ECR Repository&#xa;&#xa;- Repo: ds-newsletter-agent&#xa;- Image tag: latest&#xa;- Built from project Dockerfile&#xa;  (uv-managed Python 3.14)&#xa;- Two-pass deploy: initial_run=True&#xa;  creates ECR first, then re-deploy&#xa;  with initial_run=False creates Lambda" style="swimlane;startSize=0;align=left;verticalAlign=top;fontStyle=0;whiteSpace=wrap;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="960" y="560" width="240" height="200" as="geometry" />
+        </mxCell>
+
+        <mxCell id="legend" value="Legend&#xa;&#xa;Solid arrow: CDK-wired AWS event flow&#xa;Dashed arrow: IAM-permitted runtime call&#xa;Blue: scheduler · Green: queueing · Orange: compute&#xa;Purple: image registry · Red: dead letter · Yellow: external" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;fillColor=#f5f5f5;strokeColor=#999999;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="560" width="160" height="160" as="geometry" />
+        </mxCell>
+
       </root>
     </mxGraphModel>
   </diagram>
