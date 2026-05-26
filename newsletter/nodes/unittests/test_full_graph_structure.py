@@ -1,11 +1,22 @@
-from langchain_core.language_models.fake import FakeListLLM
-from graph import builder
+import os
+import sys
+import unittest
 
-def test_full_graph_structure():
-    # Compile the graph
-    graph = builder.compile()
-    
-    # Check if all nodes are present
-    assert "researcher" in graph.nodes
-    assert "writer" in graph.nodes
-    assert "publisher" in graph.nodes
+NEWSLETTER_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+if NEWSLETTER_DIR not in sys.path:
+    sys.path.insert(0, NEWSLETTER_DIR)
+
+
+class TestFullGraphStructure(unittest.TestCase):
+
+    def test_graph_contains_all_expected_nodes(self):
+        from graph import builder
+
+        graph = builder.compile()
+        self.assertIn("researcher", graph.nodes)
+        self.assertIn("writer", graph.nodes)
+        self.assertIn("publisher", graph.nodes)
+
+
+if __name__ == "__main__":
+    unittest.main()
