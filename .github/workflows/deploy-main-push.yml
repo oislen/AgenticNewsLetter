@@ -55,4 +55,4 @@ jobs:
     - name: Test with unittest
       run: |
         uv run python -m unittest discover ./newsletter/nodes/unittests
-        uv run python -m unittest discover ./utils/nodes/unittests
+        uv run python -m unittest discover ./newsletter/utils/unittests
