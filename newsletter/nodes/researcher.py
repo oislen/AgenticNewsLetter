@@ -33,7 +33,15 @@ def researcher_node(state: NewsletterState, config: RunnableConfig):
         api_wrapper=TavilySearchAPIWrapper(tavily_api_key=configurable.get("TAVILY_API_KEY"))
     )
     # define search query
-    query = f"latest breakthroughs and news in {state['topic']} - {state['subtopic']}"
+    # We bias toward substantive, recent signal: research findings, notable
+    # releases, new tools/libraries, and real-world applications — rather
+    # than generic "news", which tends to surface shallow coverage.
+    query = (
+        f"recent significant developments in {state['subtopic']} "
+        f"({state['topic']}): research breakthroughs, notable releases, "
+        f"new tools or libraries, and real-world applications from the "
+        f"last few weeks"
+    )
     # perform search and format results
     search_results = search.invoke({"query": query})
     context = "\n".join([f"Title: {result['title']}\nURL: {result['url']}\nContent: {result['content']}\n---" for result in search_results['results']])

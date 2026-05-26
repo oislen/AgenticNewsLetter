@@ -38,10 +38,42 @@ def writer_node(state: NewsletterState, config: RunnableConfig):
     )
     # determine selected style
     selected_style = style_guides.get(state.get("style", "ELI5"))
-    # The rest of your chain remains the same
+    # System prompt: persona, audience, output contract, anti-hallucination
+    # guardrail. Human prompt: today's beat plus the raw research, with
+    # citation guidance so URLs from the research are surfaced in the draft.
+    system_message = (
+        "You are the editor of \"DS Pulse\", a concise personal newsletter "
+        "that keeps a busy technically-minded reader current on developments "
+        f"in {state['topic']}. Each issue prioritizes substantive signal over "
+        "hype: what changed, why it matters, and what to read or try next.\n\n"
+        f"Style guide for this issue: {selected_style}\n\n"
+        "Output requirements:\n"
+        "- Write valid Markdown (it will be rendered to HTML for email).\n"
+        "- Open with a short, punchy H1 headline.\n"
+        "- Follow with a 2-3 sentence overview of the most important "
+        "developments.\n"
+        "- Then 3-5 sections, each with an H2 header, summarizing a single "
+        "story or theme in 2-4 sentences. Cite the source the first time "
+        "you reference a story using an inline Markdown link to the URL "
+        "from the research.\n"
+        "- Close with a short \"What to watch\" paragraph or takeaway.\n"
+        "- Use only facts present in the provided research; do not invent "
+        "details, statistics, dates, or attributions. If coverage is thin, "
+        "say so honestly rather than padding.\n"
+        "- Aim for roughly 400-700 words."
+    )
+    human_message = (
+        f"Today's beat: {state['topic']} — {state['subtopic']}.\n\n"
+        "Write today's issue using the research collected below. Each item "
+        "includes a title, URL, and content snippet — link the URL inline "
+        "the first time you reference a story.\n\n"
+        "--- RESEARCH ---\n"
+        f"{state['research_data']}\n"
+        "--- END RESEARCH ---"
+    )
     prompt = ChatPromptTemplate.from_messages([
-        ("system", f"You are a specialized personal News Letter writer. Style Guide: {selected_style}"),
-        ("human", f"Transform this research into a newsletter about {state['topic']} - {state['subtopic']}:\n\n{state['research_data']}")
+        ("system", system_message),
+        ("human", human_message),
     ])
     try:
         logging.info("Invoking language model ...")
