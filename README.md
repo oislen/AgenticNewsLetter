@@ -23,6 +23,8 @@ researcher  -->  writer  -->  publisher
 Secrets (Tavily API key, sender SMTP password) live in AWS Secrets
 Manager. The Lambda is built and shipped as a container image.
 
+![LangGraph Diagram](doc/agentic_newsletter_graph.jpg)
+
 ## Directory layout
 
 ```
@@ -118,3 +120,5 @@ Infrastructure is defined in [aws/cdk/](aws/cdk/). The Lambda runs on a
 schedule, pulls its container image from ECR, and reads secrets from
 AWS Secrets Manager. See [aws/cdk/app.py](aws/cdk/app.py) and the
 stacks under [aws/cdk/stacks/](aws/cdk/stacks/) for the full topology.
+
+![LangGraph Diagram](doc/aws_cdk_stack.jpg)
